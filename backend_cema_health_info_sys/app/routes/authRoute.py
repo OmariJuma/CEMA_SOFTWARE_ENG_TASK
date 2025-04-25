@@ -9,6 +9,8 @@ import uuid
 from ..config.index import Config
 import hashlib
 from ..utils import isAdmin
+from ..models import HealthProgram, User
+
 auth = Blueprint('auth', __name__)
 
 @auth.route('/api/v1/login', methods=['POST'])
@@ -65,11 +67,9 @@ def signUp():
         isAdmin = False
     try:
         salt = Config.SALT
-        print(salt)
         db_password = password + salt
         password = hashlib.sha256(db_password.encode()).hexdigest()
-        print(password)
-        
+                
         newUser= User(
             id=str(uuid.uuid4()),
             email=email,
@@ -104,3 +104,30 @@ def getUsers():
         })
     
     return jsonify(userList), 200
+
+@auth.route('/api/v1/users/<user_id>', methods=['POST'])
+@jwt_required()
+def get_user_profile(user_id):
+    current_user = get_jwt_identity()
+    if isAdmin(current_user) == False:
+        return jsonify({"message": "User not found or You are not an admin"}), 401
+        
+    user = User.query.filter_by(id=user_id).first()
+    if user is None:
+        return jsonify({"message":"User not found"}), 404
+    
+    userProfile = {
+        "id":user.id,
+        "email":user.email,
+        "is_admin":user.is_admin,
+        "health_programs":[]
+    }
+    programs = user.health_program
+    if programs is not None:
+        for program in programs:
+            userProfile["health_programs"].append({
+                "id":program.id,
+                "program_name":program.program_name,
+                "program_description":program.program_description
+            })
+    return jsonify(userProfile), 200

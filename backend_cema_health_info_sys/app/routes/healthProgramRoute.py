@@ -83,3 +83,29 @@ def add_patient_to_program(program_id):
     db.session.commit()
 
     return jsonify({"message": "User added to health program successfully"}), 200
+
+@health.route("/api/v1/healthProgram/<program_id>/patients", methods=["GET"])
+@jwt_required()
+def get_patients_in_program(program_id):
+    if isAdmin(get_jwt_identity()) == False:
+        return jsonify({"message": "User not found or You are not an admin"}), 401
+
+    program = HealthProgram.query.get(program_id)
+    if not program:
+        return jsonify({"message": "Health program not found"}), 404
+
+    patients = program.patients.all()
+    if not patients:
+        return jsonify({"message": "No patients found in this health program"}), 404
+
+    patient_list = []
+    for patient in patients:
+        patient_list.append(
+            {
+                "id": patient.id,
+                "email": patient.email,
+                "is_admin": patient.is_admin,
+            }
+        )
+
+    return jsonify(patient_list), 200
