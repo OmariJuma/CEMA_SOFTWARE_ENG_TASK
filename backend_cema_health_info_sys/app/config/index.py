@@ -8,3 +8,4 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv('DB_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
+    SALT=os.getenv('SALT')

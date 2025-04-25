@@ -14,6 +14,7 @@ def health_program():
         return jsonify({"message": 'No data received'}), 400
 
     user_id = get_jwt_identity()
+    print(user_id)
     user = User.query.filter_by(id=user_id).first()
 
     if not user:
