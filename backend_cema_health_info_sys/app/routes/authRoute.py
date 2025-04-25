@@ -6,9 +6,9 @@ from app.config.index import Config
 from ..extensions import db
 from ..models import User
 import uuid
-import os
 from ..config.index import Config
 import hashlib
+from ..utils import isAdmin
 auth = Blueprint('auth', __name__)
 
 @auth.route('/api/v1/login', methods=['POST'])
@@ -18,13 +18,21 @@ def login():
         return jsonify({"message":'No data received'}), 400
     email = data.get('email')
     password = data.get('password')
+    salted_password= password + Config.SALT
+    password = hashlib.sha256(salted_password.encode()).hexdigest()
+    user = User.query.filter_by(email=email).first()
+    if user is None:
+        return jsonify({"message":"User not found"}), 404
     
-    if email == 'admin@test.com' and password == 'admin':
-        # for the identity, I will use half the user id, I get from the database
-        access_token = create_access_token(identity=email, expires_delta=timedelta(hours=1))
+    if user.password != password:
+        return jsonify({"message":"Invalid email or password"}), 401
+    
+    if user.is_admin == True:
+        access_token = create_access_token(identity=user.id, expires_delta=timedelta(hours=1))
         return jsonify(access_token=access_token), 200
     else:
-        return jsonify({"message":'Invalid credentials'}), 401
+        return jsonify({"message":"You are not an admin"}), 401
+    
     
 @auth.route('/api/v1/signup', methods=['POST'])
 def signUp():
@@ -76,4 +84,23 @@ def signUp():
         print(e)
         return jsonify({"message":'Error creating user'}), 500
     
+@auth.route('/api/v1/users', methods=['GET'])
+@jwt_required()
+def getUsers():
+    current_user = get_jwt_identity()
+    if isAdmin(current_user) == False:
+        return jsonify({"message": "User not found or You are not an admin"}), 401
+        
+    users = User.query.all()
+    if users is None:
+        return jsonify({"message":"No users found"}), 404
     
+    userList = []
+    for user in users:
+        userList.append({
+            "id":user.id,
+            "email":user.email,
+            "is_admin":user.is_admin
+        })
+    
+    return jsonify(userList), 200
