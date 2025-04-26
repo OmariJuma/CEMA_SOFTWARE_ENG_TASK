@@ -31,7 +31,7 @@ def login():
     
     if user.is_admin == True:
         access_token = create_access_token(identity=user.id, expires_delta=timedelta(hours=1))
-        return jsonify(access_token=access_token), 200
+        return jsonify({"access_token": access_token, "id": user.id}), 200
     else:
         return jsonify({"message":"You are not an admin"}), 401
     

@@ -9,3 +9,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
     SALT=os.getenv('SALT')
+    ALLOWED_ORIGINS = os.getenv('ALLOWED_ORIGINS').split(',')
