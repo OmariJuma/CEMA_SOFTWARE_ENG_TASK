@@ -8,10 +8,11 @@ from ..utils import isAdmin
 health = Blueprint("health", __name__)
 
 
-@health.route("/api/v1/healthProgram", methods=["POST", "OPTIONS"])
+@health.route("/api/v1/healthProgram", methods=["POST"])
 @jwt_required()
 def health_program():
-    if isAdmin(get_jwt_identity()) == False:
+    current_user = get_jwt_identity()
+    if isAdmin(current_user) == False:
         return jsonify({"message": "User not found or You are not an admin"}), 401
     data = request.get_json()
     if data is None:
