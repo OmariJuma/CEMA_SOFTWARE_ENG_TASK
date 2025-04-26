@@ -20,6 +20,7 @@ interface Program {
 export default function useGetClients() {
   const [users, setUsers] = useState<User[]>([]);
   const [program, setProgram] = useState<Program | null>(null);
+  const [programs, setPrograms] = useState<Program[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams(); // Assuming you are using Next.js with dynamic routes
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function useGetClients() {
 
         const usersData = await usersResponse.json();
         const programsData = await programResponse.json();
-
+        setPrograms(programsData);
         // Filter out admin users
         const nonAdminUsers = usersData.filter((user: User) => !user.is_admin);
         setUsers(nonAdminUsers);
@@ -65,5 +66,5 @@ export default function useGetClients() {
 
     fetchData();
   }, [params.program]);
-  return { isLoading, users, program };
+  return { isLoading, users, program, programs };
 }

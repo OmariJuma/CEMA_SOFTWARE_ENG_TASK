@@ -8,10 +8,10 @@ export function useAuthCheck(shouldRedirect: boolean = true) {
   const { userData, setUserData } = useUserContext();
   const [isLoading, setIsLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("id");
   useEffect(() => {
     let isMounted = true;
+    const token = localStorage?.getItem("token");
+    const userId = localStorage?.getItem("id");
     const fetchUserData = async () => {
       try {
         if (!token || !userId) {
@@ -56,9 +56,8 @@ export function useAuthCheck(shouldRedirect: boolean = true) {
     };
     fetchUserData();
     return () => {
-        isMounted = false;
-        };
-    
+      isMounted = false;
+    };
   }, []);
   return { userData, isLoading };
 }

@@ -11,13 +11,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import Link from 'next/link';
 const pages = [
   { title: 'Create Program', path: '/programs/create' },
   { title: 'Register Client', path: '/clients/register' },
   { title: 'Enroll Client', path: '/programs' },
-  { title: 'Search Clients', path: '/clients/search' },
+  { title: 'Search Clients', path: '/clients' },
 ];
 
 const settings = ['Profile', 'Logout'];
