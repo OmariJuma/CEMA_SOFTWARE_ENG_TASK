@@ -15,8 +15,8 @@ The CEMA Health Information System is designed to:
 ## Getting Started
 
 Please refer to the specific setup instructions in:
-- [Backend Documentation](./backend_cema_health_info_sys/README.md)
-- [Frontend Documentation](./frontend_cema_health_info_sys/README.md)
+- [Backend Documentation](./cema_health_info_sys/backend_cema_health_info_sys/README.md)
+- [Frontend Documentation](./cema_health_info_sys/frontend_cema_health_info_sys/README.md)
 
 ## Features
 
