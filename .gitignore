@@ -1,0 +1,11 @@
+# Frontend
+frontend_cema_health_info_sys/node_modules/
+frontend_cema_health_info_sys/.next/
+frontend_cema_health_info_sys/.env
+frontend_cema_health_info_sys/.env.local
+
+# Backend
+backend_cema_health_info_sys/__pycache__/
+backend_cema_health_info_sys/env/
+backend_cema_health_info_sys/.env
+*.pyc
