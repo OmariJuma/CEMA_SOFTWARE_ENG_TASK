@@ -14,6 +14,9 @@ user_programs = db.Table(
 class User(db.Model):
     id = db.Column(db.String, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    name = db.Column(db.String(120), unique=False, nullable=True)
+    phone = db.Column(db.String(120), unique=False, nullable=True)
+    address = db.Column(db.String(120), unique=False, nullable=True)
     password = db.Column(db.String(120), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.now)

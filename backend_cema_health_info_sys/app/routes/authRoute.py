@@ -44,6 +44,9 @@ def signUp():
     email = data.get('email')
     password = data.get('password')
     isAdmin = data.get('isAdmin',False)
+    phone = data.get('phone')
+    address = data.get('address')
+    name = data.get('name')
     
     if email == '' or password == '':
         return jsonify({"message":'Email and password are required'}), 400
@@ -74,7 +77,10 @@ def signUp():
             id=str(uuid.uuid4()),
             email=email,
             password=password,
-            is_admin=isAdmin
+            is_admin=isAdmin,
+            phone=phone,
+            address=address,
+            name=name
         )
         db.session.add(newUser)
         db.session.commit()
@@ -100,7 +106,11 @@ def getUsers():
         userList.append({
             "id":user.id,
             "email":user.email,
-            "is_admin":user.is_admin
+            "is_admin":user.is_admin,
+            "phone":user.phone,
+            "address":user.address,
+            "created_at":user.created_at,
+            "name":user.name,
         })
     
     return jsonify(userList), 200
@@ -118,8 +128,12 @@ def get_user_profile(user_id):
     
     userProfile = {
         "id":user.id,
+        "name":user.name,
         "email":user.email,
         "is_admin":user.is_admin,
+        "phone":user.phone,
+        "address":user.address,
+        "created_at":user.created_at,
         "health_programs":[]
     }
     programs = user.health_program
