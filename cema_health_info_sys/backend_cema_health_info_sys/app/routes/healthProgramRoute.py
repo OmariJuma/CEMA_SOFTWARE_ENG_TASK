@@ -79,7 +79,10 @@ def add_patient_to_program(program_id):
     program = HealthProgram.query.get(program_id)
     if not program:
         return jsonify({"message": "Health program not found"}), 404
-
+    user_exists = program.patients.filter_by(id=user.id).first()
+    if user_exists:
+        return jsonify({"message": "User already exists in this health program"}), 400
+    
     user.health_program.append(program)
     db.session.commit()
 

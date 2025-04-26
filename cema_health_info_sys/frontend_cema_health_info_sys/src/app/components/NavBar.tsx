@@ -11,11 +11,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import Link from 'next/link';
 const pages = [
   { title: 'Create Program', path: '/programs/create' },
   { title: 'Register Client', path: '/clients/register' },
-  { title: 'Enroll Client', path: '/clients/enroll' },
+  { title: 'Enroll Client', path: '/programs' },
   { title: 'Search Clients', path: '/clients/search' },
 ];
 
@@ -56,7 +57,7 @@ function NavBar({ userData }: { userData: UserData }) {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="div"
@@ -66,9 +67,11 @@ function NavBar({ userData }: { userData: UserData }) {
               fontWeight: 700,
               color: 'inherit',
             }}
-          >
+          > */}
+          <Link href="/" className="flex items-center text-white text-2xl font-bold">
             CEMA HEALTH 
-          </Typography>
+          </Link>
+          {/* </Typography> */}
 
           <Box sx={{ flexGrow: 1, display: 'flex' }}>
             {pages.map((page) => (

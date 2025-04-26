@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuthCheck } from "../hooks/useAuthCheck";
 import { toast } from "react-toastify";
 import Link from "next/link";
-
+import { PROGRAM_COLORS } from "../utils/cardColors";
 interface Program {
   id: string;
   program_name: string;
@@ -11,7 +11,7 @@ interface Program {
 }
 
 const Programs = () => {
-    const [programs, setPrograms] = useState<Program[]>([]);
+  const [programs, setPrograms] = useState<Program[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Programs = () => {
         );
 
         if (!response.ok) {
-            setIsLoading(false);
+          setIsLoading(false);
           const error = await response.json();
           throw new Error(error.message || "Failed to fetch programs");
         }
@@ -48,6 +48,11 @@ const Programs = () => {
 
     fetchPrograms();
   }, []);
+  const getRandomColor = () => {
+    console.log(Math.random());
+    const randomIndex = Math.floor(Math.random() * PROGRAM_COLORS.length);
+    return PROGRAM_COLORS[randomIndex];
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -56,15 +61,19 @@ const Programs = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Health Programs</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {programs.map((program) => (
           <Link
             key={program.id}
             href={`/programs/${program.id}`}
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            className={`${getRandomColor()} "rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"`}
           >
-            <h2 className="text-xl font-semibold mb-3">{program.program_name}</h2>
-            <p className="text-gray-600">{program.program_description}</p>
+            <h2 className="text-center text-xl font-semibold mb-3 underline">
+              {program.program_name}
+            </h2>
+            <p className="text-center text-white">
+              {program.program_description}
+            </p>
           </Link>
         ))}
       </div>

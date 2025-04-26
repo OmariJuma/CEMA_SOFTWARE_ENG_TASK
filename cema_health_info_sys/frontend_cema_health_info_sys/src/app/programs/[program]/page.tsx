@@ -3,70 +3,15 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  is_admin: boolean;
-}
-
-interface Program {
-  id: string;
-  program_name: string;
-  program_description: string;
-}
+import useGetClients from "@/app/hooks/useGetClients";
 
 const AddUserToProgram = () => {
   const router = useRouter();
   const params = useParams();
   const { isLoading: authLoading } = useAuthCheck();
-  const [users, setUsers] = useState<User[]>([]);
-  const [program, setProgram] = useState<Program | null>(null);
+  const { isLoading, users, program } = useGetClients();
   const [selectedUser, setSelectedUser] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const [usersResponse, programResponse] = await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/users`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-          fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/healthProgram`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-        ]);
-
-        if (!usersResponse.ok || !programResponse.ok) {
-          throw new Error("Failed to fetch data");
-        }
-
-        const usersData = await usersResponse.json();
-        const programsData = await programResponse.json();
-        
-        // Filter out admin users
-        const nonAdminUsers = usersData.filter((user: User) => !user.is_admin);
-        setUsers(nonAdminUsers);
-        
-        // Find the current program
-        const currentProgram = programsData.find((p: Program) => p.id === params.program);
-        setProgram(currentProgram);
-      } catch (error) {
-        toast.error("Error fetching data");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [params.program]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,7 +63,9 @@ const AddUserToProgram = () => {
         <h2 className="text-2xl text-gray-700 font-bold mb-6 text-center">
           {program.program_name}
         </h2>
-        <p className="text-gray-600 mb-6 text-center">{program.program_description}</p>
+        <p className="text-gray-600 mb-6 text-center">
+          {program.program_description}
+        </p>
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <label

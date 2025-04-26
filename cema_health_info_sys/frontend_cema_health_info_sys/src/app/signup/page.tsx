@@ -55,7 +55,7 @@ function SignUp() {
     <div className="flex items-center justify-center min-h-screen">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl text-gray-700 font-bold mb-6 text-center">
-          User Registration
+          {pathname == "signup"? "User Registration" : "Register Client"}
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -145,6 +145,12 @@ function SignUp() {
             Register
           </button>
         </form>
+       {pathname =="signup" && <p className="mt-4 text-center text-gray-600">
+          Do have an account?{" "}
+          <a href="/login" className="text-blue-500 hover:underline">
+            Log In
+          </a>
+        </p>}
       </div>
     </div>
   );
