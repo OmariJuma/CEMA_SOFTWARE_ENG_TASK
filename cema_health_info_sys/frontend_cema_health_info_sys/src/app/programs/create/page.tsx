@@ -53,49 +53,53 @@ const CreateProgram = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 text-white">
-      <h1 className="text-3xl font-bold mb-6">Create Health Program</h1>
-      <form onSubmit={handleSubmit} className="max-w-lg">
-        <div className="mb-4">
-          <label
-            htmlFor="program_name"
-            className="block text-white font-bold mb-2"
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <h2 className="text-2xl text-gray-700 font-bold mb-6 text-center">
+          Create Health Program
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              htmlFor="program_name"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Program Name
+            </label>
+            <input
+              type="text"
+              id="program_name"
+              value={programName}
+              onChange={(e) => setProgramName(e.target.value)}
+              className="w-full text-gray-700 px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="program_description"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Program Description
+            </label>
+            <textarea
+              id="program_description"
+              value={programDescription}
+              onChange={(e) => setProgramDescription(e.target.value)}
+              className="w-full text-gray-700 px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              rows={4}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
+            disabled={submitting}
           >
-            Program Name
-          </label>
-          <input
-            type="text"
-            id="program_name"
-            value={programName}
-            onChange={(e) => setProgramName(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="program_description"
-            className="block text-white font-bold mb-2"
-          >
-            Program Description
-          </label>
-          <textarea
-            id="program_description"
-            value={programDescription}
-            onChange={(e) => setProgramDescription(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-            rows={4}
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
-          disabled={submitting}
-        >
-          {submitting ? "Creating..." : "Create Program"}
-        </button>
-      </form>
+            {submitting ? "Creating..." : "Create Program"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
