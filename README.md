@@ -1,0 +1,34 @@
+# CEMA Health Information System
+
+## Developed by Omar Juma
+
+A fullstack health program management system that allows administrators to manage health programs and client enrollments.
+
+## Overview
+
+The CEMA Health Information System is designed to:
+- Manage health programs
+- Handle client registrations
+- Track program enrollments
+- Provide administrative controls
+
+## Getting Started
+
+Please refer to the specific setup instructions in:
+- [Backend Documentation](./backend_cema_health_info_sys/README.md)
+- [Frontend Documentation](./frontend_cema_health_info_sys/README.md)
+
+## Features
+
+- User Authentication & Authorization
+- Health Program Management
+- Client Registration & Management
+- Program Enrollment System
+- Admin Dashboard
+- Search Functionality
+
+## Tech Stack
+
+- Frontend: Next.js, TypeScript, TailwindCSS
+- Backend: Flask, SQLAlchemy, JWT Authentication
+- Database: Postgres
