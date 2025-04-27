@@ -42,7 +42,7 @@ function SignUp() {
         router.push("/login");
       }
       if (pathname === "/clients/register") {
-        router.push("/clients/search");
+        router.push("/clients");
       }
     } catch (error) {
       toast.error(
