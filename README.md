@@ -1,6 +1,10 @@
 # CEMA Health Information System
 
 ## Developed by Omar Juma
+ [walkthrough demo](https://drive.google.com/file/d/1nVTHBiS32jdEyE0sZShtwPg1By8UyiG5/view)
+
+ [power point presentation](https://1drv.ms/p/s!As5zxURtRK1vjatY5COG3Dz3ujl5yw)
+
 
 A fullstack health program management system that allows administrators to manage health programs and client enrollments.
 
@@ -11,6 +15,8 @@ The CEMA Health Information System is designed to:
 - Handle client registrations
 - Track program enrollments
 - Provide administrative controls
+
+   
 
 ## Getting Started
 
