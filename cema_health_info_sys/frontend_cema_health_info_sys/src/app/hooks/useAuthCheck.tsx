@@ -58,6 +58,6 @@ export function useAuthCheck(shouldRedirect: boolean = true) {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [shouldRedirect, setUserData, router]);
   return { userData, isLoading };
 }

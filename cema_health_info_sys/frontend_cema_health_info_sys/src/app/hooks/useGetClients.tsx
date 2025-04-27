@@ -58,6 +58,7 @@ export default function useGetClients() {
         );
         setProgram(currentProgram);
       } catch (error) {
+        console.error(error);
         toast.error("Error fetching data");
       } finally {
         setIsLoading(false);
